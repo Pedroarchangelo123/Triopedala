@@ -1,7 +1,12 @@
 package senai.CrudEventos.entites;
 
 import io.micrometer.observation.Observation.Event;
-import senai.CrudEventos.DTO.ParticipantDTO;
+
+
+import senai.CrudEventos.entites.Evento;
+import senai.CrudEventos.entites.ParticipantDTO;
+import senai.CrudEventos.entites.Participantes;
+
 
 public class Registro {
 	    private Long id;
@@ -15,6 +20,5 @@ public class Registro {
 	    public Evento getEvento() { return evento; }
 	    public void setStatus(String status) { this.status = status; }
 		public void setEvento(Event evento2) {
-			// TODO Auto-generated method stub
 		}
 }

@@ -1,6 +1,4 @@
 
-package senai.CrudEventos.repository;
-
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -10,6 +10,11 @@ import senai.CrudEventos.entites.Participantes;
 import senai.CrudEventos.repository.EventoRepository;
 import senai.CrudEventos.repository.ParticipanteRepository;
 
+import jakarta.transaction.Transactional;
+import senai.CrudEventos.entites.Evento;
+import senai.CrudEventos.entites.Participantes;
+
+
 
 @Service
 public class EventoService {
