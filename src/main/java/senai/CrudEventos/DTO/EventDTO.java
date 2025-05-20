@@ -1,10 +1,10 @@
 package senai.CrudEventos.DTO;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import lombok.Data;
 
-	public class ParticipantDTO {
 
-	}
+public class EventDTO {
+
+}

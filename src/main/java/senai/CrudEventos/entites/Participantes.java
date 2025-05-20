@@ -37,7 +37,6 @@ public class Participantes {
     }
 
 	public int getVagas() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

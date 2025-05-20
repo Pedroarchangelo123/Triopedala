@@ -1,38 +1,87 @@
 package senai.CrudEventos.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
-import Repository.EventoRepository;
-import Repository.ParticipanteRepository;
-import jakarta.transaction.Transactional;
 import senai.CrudEventos.entites.Evento;
 import senai.CrudEventos.entites.Participantes;
+import senai.CrudEventos.repository.EventoRepository;
+import senai.CrudEventos.repository.ParticipanteRepository;
 
 
 @Service
 public class EventoService {
+	 @Autowired
+	    private EventoRepository eventoRepository;
 
-    private final EventoRepository eventoRepository;
-    private final ParticipanteRepository participanteRepository;
+	    @Autowired
+	    private ParticipanteRepository participanteRepository;
 
-    @Autowired
-    public EventoService(EventoRepository eventoRepository, 
-                        ParticipanteRepository participanteRepository) {
-        this.eventoRepository = eventoRepository;
-        this.participanteRepository = participanteRepository;
-    }
+	    public Evento criarEvento(Evento evento) {
+	        return eventoRepository.save(evento);
+	    }
 
-    @SuppressWarnings("rawtypes")
-	@Transactional
-    public void inscreverParticipante(Long eventoId, Long participanteId) throws Exception {
-        Evento evento = eventoRepository.findById(eventoId)
-                .orElseThrow(() -> new IllegalArgumentException("Evento não encontrado"));
-        
-        ParticipanteRepository participante = participanteRepository.findById(participanteId)
-                .orElseThrow(() -> new IllegalArgumentException("Participante não encontrado"));
+	    public List<Evento> listarEventos() {
+	        return eventoRepository.findAll();
+	    }
 
-            throw new Exception("Evento sem vagas disponíveis");
-}
-    }
+	    public Evento atualizarEvento(Long id, Evento novoEvento) {
+	        Evento evento = eventoRepository.findById(id)
+	                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
+
+	        evento.setNome(novoEvento.getNome());
+	        evento.setLocal(novoEvento.getLocal());
+	        evento.setVagas(novoEvento.getVagas());
+
+	        return eventoRepository.save(evento);
+	    }
+
+	    public void deletarEvento(Long id) {
+	        eventoRepository.deleteById(id);
+	    }
+
+	    public String inscreverParticipante(Long eventoId, Long participanteId) {
+	        Evento evento = eventoRepository.findById(eventoId)
+	                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
+
+	        Participantes participante = participanteRepository.findById(participanteId)
+	                .orElseThrow(() -> new RuntimeException("Participante não encontrado"));
+
+	        if (evento.getParticipantes().contains(participante)) {
+	            return "Participante já inscrito neste evento.";
+	        }
+
+	        if (evento.getParticipantes().size() >= evento.getVagas()) {
+	            return "Evento lotado.";
+	        }
+
+	        evento.getParticipantes().add(participante);
+	        eventoRepository.save(evento);
+	        return "Inscrição realizada com sucesso!";
+	    }
+
+	    public String cancelarInscricao(Long eventoId, Long participanteId) {
+	        Evento evento = eventoRepository.findById(eventoId)
+	                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
+
+	        Participantes participante = participanteRepository.findById(participanteId)
+	                .orElseThrow(() -> new RuntimeException("Participante não encontrado"));
+
+	        if (!evento.getParticipantes().contains(participante)) {
+	            return "Participante não está inscrito neste evento.";
+	        }
+
+	        evento.getParticipantes().remove(participante);
+	        eventoRepository.save(evento);
+	        return "Inscrição cancelada com sucesso.";
+	    }
+
+	    public List<Participantes> listarParticipantes(Long eventoId) {
+	        Evento evento = eventoRepository.findById(eventoId)
+	                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
+
+	        return evento.getParticipantes();
+	    }
+	}

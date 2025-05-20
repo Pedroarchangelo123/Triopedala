@@ -1,9 +1,7 @@
-package senai.CrudEventos.entity;
+package senai.CrudEventos.entites;
 
 import io.micrometer.observation.Observation.Event;
 import senai.CrudEventos.DTO.ParticipantDTO;
-import senai.CrudEventos.entites.Evento;
-import senai.CrudEventos.entites.Participantes;
 
 public class Registro {
 	    private Long id;
