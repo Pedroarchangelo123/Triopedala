@@ -1,7 +1,7 @@
 package senai.CrudEventos.Service;
 
-import Repository.ParticipanteRepository;
 import senai.CrudEventos.entites.Evento;
+import senaiCrudEventos.Repository.ParticipanteRepository;
 
 public class Registro {
 

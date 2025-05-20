@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
-import Repository.EventoRepository;
-import Repository.ParticipanteRepository;
 import jakarta.transaction.Transactional;
 import senai.CrudEventos.entites.Evento;
 import senai.CrudEventos.entites.Participantes;
+import senaiCrudEventos.Repository.EventoRepository;
+import senaiCrudEventos.Repository.ParticipanteRepository;
 
 
 @Service
