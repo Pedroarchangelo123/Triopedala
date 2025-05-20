@@ -42,4 +42,24 @@ public class Evento {
     public void setParticipantes(Set<Participantes> participantes) {
         this.participantes = participantes;
     }
+
+	public int getVagas() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getVagas2() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getVagas3() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getVagas4() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

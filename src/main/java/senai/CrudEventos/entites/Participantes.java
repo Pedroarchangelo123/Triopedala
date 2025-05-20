@@ -35,4 +35,15 @@ public class Participantes {
     public void setEventos(Set<Evento> eventos) {
         this.eventos = eventos;
     }
-}
+
+	public int getVagas() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public Object getParticipantes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	}
