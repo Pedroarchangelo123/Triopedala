@@ -1,18 +1,18 @@
 package senai.CrudEventos.Service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import senai.CrudEventos.entites.Evento;
-import senai.CrudEventos.entites.Participantes;
+import jakarta.transaction.Transactional;
+import senai.CrudEventos.entities.Evento;
+import senai.CrudEventos.entities.Participantes;
 import senai.CrudEventos.repository.EventoRepository;
 import senai.CrudEventos.repository.ParticipanteRepository;
 
-import jakarta.transaction.Transactional;
-import senai.CrudEventos.entites.Evento;
-import senai.CrudEventos.entites.Participantes;
+
 
 
 
@@ -27,7 +27,7 @@ public class EventoService {
 	    public Evento criarEvento(Evento evento) {
 	        return eventoRepository.save(evento);
 	    }
-
+	    @Transactional
 	    public List<Evento> listarEventos() {
 	        return eventoRepository.findAll();
 	    }
@@ -46,7 +46,7 @@ public class EventoService {
 	    public void deletarEvento(Long id) {
 	        eventoRepository.deleteById(id);
 	    }
-
+	    @Transactional
 	    public String inscreverParticipante(Long eventoId, Long participanteId) {
 	        Evento evento = eventoRepository.findById(eventoId)
 	                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
@@ -66,13 +66,14 @@ public class EventoService {
 	        eventoRepository.save(evento);
 	        return "Inscrição realizada com sucesso!";
 	    }
-
+	    @Transactional
 	    public String cancelarInscricao(Long eventoId, Long participanteId) {
 	        Evento evento = eventoRepository.findById(eventoId)
 	                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
 
 	        Participantes participante = participanteRepository.findById(participanteId)
 	                .orElseThrow(() -> new RuntimeException("Participante não encontrado"));
+
 
 	        if (!evento.getParticipantes().contains(participante)) {
 	            return "Participante não está inscrito neste evento.";
@@ -82,8 +83,8 @@ public class EventoService {
 	        eventoRepository.save(evento);
 	        return "Inscrição cancelada com sucesso.";
 	    }
-
-	    public List<Participantes> listarParticipantes(Long eventoId) {
+	    @Transactional
+	    public Set<Participantes> listarParticipantes(Long eventoId) {
 	        Evento evento = eventoRepository.findById(eventoId)
 	                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
 

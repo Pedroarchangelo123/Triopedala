@@ -1,4 +1,4 @@
-package senai.CrudEventos.entites;
+package senai.CrudEventos.entities;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,8 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "tb_evento")
 public class Evento {
     
     @Id

@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.transaction.Transactional;
+import senai.CrudEventos.DTO.EventDTO;
+import senai.CrudEventos.DTO.EventoComParticipantesDTO;
 import senai.CrudEventos.Service.EventoService;
-import senai.CrudEventos.entites.Evento;
-import senai.CrudEventos.entites.Participantes;
+import senai.CrudEventos.entities.Evento;
 
 @RestController
 @RequestMapping("/eventos")
@@ -25,15 +27,18 @@ public class EventoController {
     @Autowired
     private EventoService eventoService;
 
-    @PostMapping
+    @PostMapping("/criar")
     public ResponseEntity<Evento> criarEvento(@RequestBody Evento evento) {
         return ResponseEntity.ok(eventoService.criarEvento(evento));
     }
 
     @GetMapping
-    public ResponseEntity<List<Evento>> listarEventos() {
-        return ResponseEntity.ok(eventoService.listarEventos());
+    public ResponseEntity<List<EventDTO>> listarEventos() {
+        List<Evento> eventos = eventoService.listarEventos();
+        List<EventDTO> eventosDTO = eventos.stream().map(EventDTO::new).toList();
+        return ResponseEntity.ok(eventosDTO);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Evento> atualizarEvento(@PathVariable Long id, @RequestBody Evento evento) {
@@ -62,8 +67,17 @@ public class EventoController {
         return ResponseEntity.ok(eventoService.cancelarInscricao(eventoId, participanteId));
     }
 
-    @GetMapping("/{id}/participantes")
-    public ResponseEntity<List<Participantes>> listarParticipantes(@PathVariable Long id) {
-        return ResponseEntity.ok(eventoService.listarParticipantes(id));
+//    @GetMapping("/{id}/participantes")
+//    public ResponseEntity<Set<Participantes>> listarParticipantes(@PathVariable Long id) {
+//        return ResponseEntity.ok(eventoService.listarParticipantes(id));
+//    }
+    @Transactional
+    @GetMapping("/com-participantes")
+    public ResponseEntity<List<EventoComParticipantesDTO>> listarEventosComParticipantes() {
+        List<Evento> eventos = eventoService.listarEventos();
+        List<EventoComParticipantesDTO> eventosDTO = eventos.stream()
+            .map(EventoComParticipantesDTO::new)
+            .toList();
+        return ResponseEntity.ok(eventosDTO);
     }
 }
