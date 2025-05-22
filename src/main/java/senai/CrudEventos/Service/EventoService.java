@@ -31,7 +31,7 @@ public class EventoService {
 	    public List<Evento> listarEventos() {
 	        return eventoRepository.findAll();
 	    }
-
+	    @Transactional
 	    public Evento atualizarEvento(Long id, Evento novoEvento) {
 	        Evento evento = eventoRepository.findById(id)
 	                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
@@ -42,7 +42,7 @@ public class EventoService {
 
 	        return eventoRepository.save(evento);
 	    }
-
+	    @Transactional
 	    public void deletarEvento(Long id) {
 	        eventoRepository.deleteById(id);
 	    }

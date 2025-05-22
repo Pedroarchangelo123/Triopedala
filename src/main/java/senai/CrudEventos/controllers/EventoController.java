@@ -41,8 +41,9 @@ public class EventoController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Evento> atualizarEvento(@PathVariable Long id, @RequestBody Evento evento) {
-        return ResponseEntity.ok(eventoService.atualizarEvento(id, evento));
+    public ResponseEntity<EventDTO> atualizarEvento(@PathVariable Long id, @RequestBody Evento evento) {
+        Evento atualizado = eventoService.atualizarEvento(id, evento);
+        return ResponseEntity.ok(new EventDTO(atualizado));
     }
 
     @DeleteMapping("/{id}")
